@@ -16,6 +16,7 @@ class PayrollSystem extends PayrollFunctionalities{
     void registerEmployee(){
         boolean duplicate = false;
         boolean isLegalAge = true;
+        int counter = 1;
         String errMsg = "Error: ";
         System.out.println("Enter First Name:");
         String fname = sc.nextLine();
@@ -24,18 +25,25 @@ class PayrollSystem extends PayrollFunctionalities{
         System.out.println("Enter Last Name:");
         String lname = sc.nextLine();
         System.out.println("Enter Designation:");
+        for (String a : designations) {
+            counter++;
+            System.out.print(String.format("[%s] ",a ));
+            if (counter == 5)
+                System.out.println();
+        }
+        System.out.println(":");
         String designation = sc.nextLine();
+        counter = 1;
         System.out.println("Enter Address:");
         String address = sc.nextLine();
         System.out.println("Salary Grade[1-20]:");
-        int counter = 1;
         for (Map.Entry me : salaryGrades.entrySet()) {
             counter++;
             System.out.print(String.format("[%d - %f] ",me.getKey(),me.getValue()) );
             if (counter == 10)
                 System.out.println();
         }
-        System.out.println();
+        System.out.println(":");
         int salaryGrade = sc.nextInt();
         sc.nextLine();
         LocalDate dob = inputDob();
@@ -67,19 +75,8 @@ class PayrollSystem extends PayrollFunctionalities{
 
         if (!duplicate && isLegalAge){
             employees.add(new Employee(fname,mname,lname, generateEmpID(),dob,designation,address,salaryGrade, age));
+            System.out.println("Added Succesfully!");
 
-            for (Employee e: // if employees have elements
-                    employees) {
-
-                System.out.print(e.getEmpID()+" |");
-                System.out.print(e.getFirstName()+" ");
-                System.out.print(e.getMiddleName()+" |");
-                System.out.print(e.getLastName()+" |");
-                System.out.print(e.getAge()+" |");
-                System.out.print(String.format("%d: $%f |",e.getSalaryGrade(), getSalaryGrade().get(e.getSalaryGrade())));
-                System.out.println(e.getDesignation()+" |");
-                System.out.println("_______________");
-            }
         }else{
             System.out.println(errMsg);
         }
@@ -165,5 +162,23 @@ class PayrollSystem extends PayrollFunctionalities{
         }
     }
 
+    @Override
+    void showEmployes() {
+        if (employees.size() == 0){
+            System.out.println("There are no registered employee!");
+            return;
+        }
+        for (Employee e: // if employees have elements
+                employees) {
 
+            System.out.print(e.getEmpID()+" |");
+            System.out.print(e.getFirstName()+" ");
+            System.out.print(e.getMiddleName()+" |");
+            System.out.print(e.getLastName()+" |");
+            System.out.print(e.getAge()+" |");
+            System.out.print(String.format("%d: $%f |",e.getSalaryGrade(), getSalaryGrade().get(e.getSalaryGrade())));
+            System.out.println(e.getDesignation()+" |");
+            System.out.println("_______________");
+        }
+    }
 }

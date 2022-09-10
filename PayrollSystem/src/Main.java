@@ -36,7 +36,7 @@ public class Main {
         } catch (NumberFormatException e) {
             numeric = false;
         }
-        if(userInput > 0 && userInput < 8)
+        if(userInput > 0 && userInput <= 8)
             validNumber = true;
         if (numeric && singleChar && validNumber){
             return userInput;
@@ -51,6 +51,8 @@ public class Main {
             p.registerEmployee();
         if (choice == 2)
             p.searchEmployee();
+        if (choice == 8)
+            p.showEmployes();
 
         System.out.println("Proceed to Main Menu[6] / Exit[7] ");
 //			Asks user if user wants to continue
@@ -64,7 +66,7 @@ public class Main {
         payrollSystem.setSalaryGrade();
 //        System.out.println(payrollSystem.getSalaryGrade());
         System.out.println("_*_*_*_Payroll System_*_*_*_ | Registered Employees: "+payrollSystem.numberOfEmployees+"\n----------------------------\n\t[1] Register \n\t[2] Search " +
-                "\n\t[3]  \n\t[4] \n\t[5]  \n\t[7] ");
+                "\n\t[3]  \n\t[4] \n\t[5]  \n\t[7] \n\t[8] Show Employees ");
         int userInput = AskUser();
         while(userInput != 7) {
             System.out.println("----------------------------");
@@ -78,12 +80,15 @@ public class Main {
                 case 6:
 
                     System.out.println("_*_*_*_Payroll System_*_*_*_ | Registered Employees: "+payrollSystem.numberOfEmployees+"\n----------------------------\n\t[1] Register \n\t[2] Search " +
-                            "\n\t[3]  \n\t[4] \n\t[5]  \n\t[7] ");
+                            "\n\t[3]  \n\t[4] \n\t[5]  \n\t[7] \n\t[8] Show Employees ");
                     userInput = AskUser();
                     break;
                 case 7:
                     System.out.println("Exit");
                     userInput = 7;
+                    break;
+                case 8:
+                    userInput = payrollFunction(payrollSystem,userInput);
                     break;
                 default:
                     userInput = 7;

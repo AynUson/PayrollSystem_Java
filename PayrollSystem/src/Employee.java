@@ -10,6 +10,12 @@ class Employee {
     private String designation;
     private String cityAddress;
 
+//    Salary deduction
+    private double salaryDeduction = 0;
+
+//    Allowance
+    private double allowance = 0;
+
     private LocalDate empDob;
 
     public Employee(String fname, String mname, String lname, String id,LocalDate dob, String desig, String address, int salaryGrade, int age){

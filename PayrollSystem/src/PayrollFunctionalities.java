@@ -12,6 +12,10 @@ abstract class PayrollFunctionalities {
     abstract void registerEmployee();
     abstract void searchEmployee();
 
+    abstract void deductSalary();
+
+    abstract boolean validateEmpID();
+
     String[] designations = {"Application Developer", "Associate Developer","Software Quality Assurance Analyst","Database Administrator","IT Director"
             ,"IT Analyst","Network Architect","IT Support Specialist","UI/UX Designer"};
     public HashMap<Integer,Double> salaryGrades = new HashMap<Integer,Double>();

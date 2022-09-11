@@ -11,9 +11,16 @@ Search Employee
 - Display Name✔DONE, Designation✔DONE, City Address✔DONE, Salary Grade✔DONE (search for some common salary grades in PH.)
                        ~Show Designation Choices also
 
+Salary Deduction
+- Search for the employees id then enter amount to deduct
 
+Payslip Display
+- Issue a payslip depending on the date range provided.
+- Provide a substantial data containing common fields in a payslip like tax, night diff,
+    ot, allowances, deduction, etc. formula is up to you.
 
-
+Allowance
+- search for the employee's id then ask for the amount we want to add as compensation (must reflect to payslip)
 
  */
 
@@ -47,10 +54,17 @@ public class Main {
     }
 
     static int payrollFunction(PayrollSystem p, int choice){
+//        Convert this to Switch
         if (choice == 1)
             p.registerEmployee();
         if (choice == 2)
             p.searchEmployee();
+        if (choice == 3)
+            p.deductSalary();
+        if (choice == 6){
+            System.out.println("_*_*_*_Payroll System_*_*_*_ | Registered Employees: "+p.numberOfEmployees+"\n----------------------------\n\t[1] Register \n\t[2] Search " +
+                    "\n\t[3] Salary Deduction  \n\t[4] \n\t[5]  \n\t[7] \n\t[8] Show Employees ");
+        }
         if (choice == 8)
             p.showEmployes();
 
@@ -64,39 +78,26 @@ public class Main {
 
         PayrollSystem payrollSystem = new PayrollSystem();
         payrollSystem.setSalaryGrade();
-//        System.out.println(payrollSystem.getSalaryGrade());
-        System.out.println("_*_*_*_Payroll System_*_*_*_ | Registered Employees: "+payrollSystem.numberOfEmployees+"\n----------------------------\n\t[1] Register \n\t[2] Search " +
-                "\n\t[3]  \n\t[4] \n\t[5]  \n\t[7] \n\t[8] Show Employees ");
-        int userInput = AskUser();
+        int userInput = 6;
         while(userInput != 7) {
             System.out.println("----------------------------");
-            switch (userInput){
-                case 1:
-                    userInput = payrollFunction(payrollSystem,userInput);
-                    break;
-                case 2:
-                    userInput = payrollFunction(payrollSystem,userInput);
-                    break;
-                case 6:
-
-                    System.out.println("_*_*_*_Payroll System_*_*_*_ | Registered Employees: "+payrollSystem.numberOfEmployees+"\n----------------------------\n\t[1] Register \n\t[2] Search " +
-                            "\n\t[3]  \n\t[4] \n\t[5]  \n\t[7] \n\t[8] Show Employees ");
-                    userInput = AskUser();
-                    break;
-                case 7:
-                    System.out.println("Exit");
-                    userInput = 7;
-                    break;
-                case 8:
-                    userInput = payrollFunction(payrollSystem,userInput);
-                    break;
-                default:
-                    userInput = 7;
-                    break;
-
-            }
+            userInput = payrollFunction(payrollSystem,userInput);
         }
-
-
+        System.out.println("Exited Payroll System! Thank you! \n" +
+                "░░░░░░░░░░░░░░░░░░░░░░█████████\n" +
+                "░░███████░░░░░░░░░░███▒▒▒▒▒▒▒▒███\n" +
+                "░░█▒▒▒▒▒▒█░░░░░░░███▒▒▒▒▒▒▒▒▒▒▒▒▒███\n" +
+                "░░░█▒▒▒▒▒▒█░░░░██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n" +
+                "░░░░█▒▒▒▒▒█░░░██▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒███\n" +
+                "░░░░░█▒▒▒█░░░█▒▒▒▒▒▒████▒▒▒▒████▒▒▒▒▒▒██\n" +
+                "░░░█████████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n" +
+                "░░░█▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒██\n" +
+                "░██▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒██▒▒▒▒▒▒▒▒▒▒██▒▒▒▒██\n" +
+                "██▒▒▒███████████▒▒▒▒▒██▒▒▒▒▒▒▒▒██▒▒▒▒▒██\n" +
+                "█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒████████▒▒▒▒▒▒▒██\n" +
+                "██▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n" +
+                "░█▒▒▒███████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n" +
+                "░██▒▒▒▒▒▒▒▒▒▒████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█\n" +
+                "░░████████████░░░█████████████████\n");
     }
 }

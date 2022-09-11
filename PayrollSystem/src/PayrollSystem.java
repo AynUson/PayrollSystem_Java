@@ -36,7 +36,7 @@ class PayrollSystem extends PayrollFunctionalities{
         counter = 1;
         System.out.println("Enter Address:");
         String address = sc.nextLine();
-        System.out.println("Salary Grade[1-20]:");
+        System.out.println("Salary Grade (Minimum Salary Monthly)[1-20]:");
         for (Map.Entry me : salaryGrades.entrySet()) {
             counter++;
             System.out.print(String.format("[%d - %f] ",me.getKey(),me.getValue()) );
@@ -180,5 +180,42 @@ class PayrollSystem extends PayrollFunctionalities{
             System.out.println(e.getDesignation()+" |");
             System.out.println("_______________");
         }
+    }
+
+    @Override
+    boolean validateEmpID() {
+
+        boolean valid = false;
+        System.out.println("Enter Employee ID: ");
+        String empID = sc.nextLine();
+        for (Employee user:
+                employees) {
+            if (empID.equals(user.getEmpID())){
+                this.loggedIn = user;
+                valid = true;
+                break;
+            }
+        }
+        if (!valid)
+            System.out.println("Did not match any record.");
+        return valid;
+
+    }
+
+    Employee loggedIn;
+    @Override
+    void deductSalary() {
+        if (employees.size() == 0){
+            System.out.println("There are no registered employee!");
+            return;
+        }
+
+        System.out.println("*_*_* Salary Deduction *_*_*");
+        validateEmpID();
+
+        System.out.println(loggedIn.getFirstName());
+        System.out.println(loggedIn.getDesignation());
+        this.loggedIn = null;
+
     }
 }

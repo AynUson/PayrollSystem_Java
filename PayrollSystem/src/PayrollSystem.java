@@ -1,10 +1,12 @@
+
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Map;
-
-import java.text.SimpleDateFormat;
 class PayrollSystem extends PayrollFunctionalities{
     public ArrayList< Employee> employees = new ArrayList<>();
 
@@ -33,19 +35,30 @@ class PayrollSystem extends PayrollFunctionalities{
         }
         System.out.println(":");
         String designation = sc.nextLine();
-        counter = 1;
         System.out.println("Enter Address:");
         String address = sc.nextLine();
-        System.out.println("Salary Grade (Minimum Salary Monthly)[1-20]:");
-        for (Map.Entry me : salaryGrades.entrySet()) {
-            counter++;
-            System.out.print(String.format("[%d - %f] ",me.getKey(),me.getValue()) );
-            if (counter == 10)
-                System.out.println();
-        }
-        System.out.println(":");
-        int salaryGrade = sc.nextInt();
+
+        System.out.println("Salary: ");
+
+        double salary = sc.nextDouble();
+//
+        double minimumSalary = 0;
+        int grade = 0;
         sc.nextLine();
+        for (Map.Entry me : salaryGrades.entrySet()) {
+            double val = (double) me.getValue();
+            int g = (int) me.getKey();
+            if (salary < val)
+                break;
+            grade = g;
+            minimumSalary = val;
+        }
+        System.out.println("Your salary: "+ salary);
+
+        System.out.println(String.format("Grade: %d - %f",grade,minimumSalary));
+
+
+//
         LocalDate dob = inputDob();
         int age = calculateAge(dob);
         if (age < 18){
@@ -54,9 +67,8 @@ class PayrollSystem extends PayrollFunctionalities{
         }
 
 
-        String empID;
         if (employees.size() == 0){ //if employees size is zero
-            employees.add(new Employee(fname,mname,lname, generateEmpID(),dob,designation,address,salaryGrade, age));
+            employees.add(new Employee(fname,mname,lname, generateEmpID(),dob,designation,address,grade, age,salary));
 
             System.out.println("Added Succesfully!");
             return;
@@ -74,7 +86,7 @@ class PayrollSystem extends PayrollFunctionalities{
         }
 
         if (!duplicate && isLegalAge){
-            employees.add(new Employee(fname,mname,lname, generateEmpID(),dob,designation,address,salaryGrade, age));
+            employees.add(new Employee(fname,mname,lname, generateEmpID(),dob,designation,address,grade, age,salary));
             System.out.println("Added Succesfully!");
 
         }else{
@@ -104,8 +116,8 @@ class PayrollSystem extends PayrollFunctionalities{
 
             if (lname.equals(input) || empid.equals(input)){
                 result = String.format("\t\t**RESULT**\nID:\t\t\t\t %s \nFull name:\t\t %s %s %s \nAge:\t\t\t %s \nDesignation:\t %s " +
-                        "\nAddress:\t\t %s \nSalary Grade:\t %d- $%f ",e.getEmpID(),e.getFirstName(),e.getMiddleName(),e.getLastName(),e.getAge()
-                        ,e.getDesignation(), e.getCityAddress(),e.getSalaryGrade(), getSalaryGrade().get(e.getSalaryGrade()));
+                        "\nAddress:\t\t %s \nSalary Grade:\t %d- $%f \nAllowance:\t $%f ",e.getEmpID(),e.getFirstName(),e.getMiddleName(),e.getLastName(),e.getAge()
+                        ,e.getDesignation(), e.getCityAddress(),e.getSalaryGrade(), getSalaryGrade().get(e.getSalaryGrade()),e.getAllowance());
                 found = true;
                 break;
             }
@@ -168,23 +180,20 @@ class PayrollSystem extends PayrollFunctionalities{
             System.out.println("There are no registered employee!");
             return;
         }
+
+        System.out.println("\t\t**RESULT**");
         for (Employee e: // if employees have elements
                 employees) {
 
-            System.out.print(e.getEmpID()+" |");
-            System.out.print(e.getFirstName()+" ");
-            System.out.print(e.getMiddleName()+" |");
-            System.out.print(e.getLastName()+" |");
-            System.out.print(e.getAge()+" |");
-            System.out.print(String.format("%d: $%f |",e.getSalaryGrade(), getSalaryGrade().get(e.getSalaryGrade())));
-            System.out.println(e.getDesignation()+" |");
-            System.out.println("_______________");
+            System.out.println(String.format("--------------------------------------\nID:\t\t\t\t %s \nFull name:\t\t %s %s %s \nAge:\t\t\t %s \nDesignation:\t %s " +
+                            "\nAddress:\t\t %s \nSalary Grade:\t %d- $%f \nSalary Deduction:\t $%f\nAllowance:\t $%f \n--------------------------------------",e.getEmpID(),e.getFirstName(),e.getMiddleName(),e.getLastName(),e.getAge()
+                    ,e.getDesignation(), e.getCityAddress(),e.getSalaryGrade(), getSalaryGrade().get(e.getSalaryGrade()),e.getSalaryDeduction(),e.getAllowance()));
+//
         }
     }
 
     @Override
     boolean validateEmpID() {
-
         boolean valid = false;
         System.out.println("Enter Employee ID: ");
         String empID = sc.nextLine();
@@ -215,7 +224,77 @@ class PayrollSystem extends PayrollFunctionalities{
 
         System.out.println(loggedIn.getFirstName());
         System.out.println(loggedIn.getDesignation());
+        System.out.println(loggedIn.getSalary());
+
+        System.out.println("Enter amount to deduct: ");
+        double deduction = sc.nextDouble();
+        sc.nextLine();
+        loggedIn.setSalaryDeduction(deduction);
+        System.out.println(String.format("Current Salary: %f \nSalary Deduction: %f\n Salary Deduction Recorded.",loggedIn.getSalary(),loggedIn.getSalaryDeduction()));
         this.loggedIn = null;
 
     }
+
+    @Override
+    void addAllowance() {
+        if (employees.size() == 0){
+            System.out.println("There are no registered employee!");
+            return;
+        }
+
+        System.out.println("*_*_* Allowance *_*_*");
+        validateEmpID();
+
+        System.out.println(loggedIn.getFirstName());
+        System.out.println(loggedIn.getDesignation());
+        System.out.println(loggedIn.getSalary());
+
+        System.out.println("Enter amount to add as compensation: ");
+        double allowance = sc.nextDouble();
+        sc.nextLine();
+        loggedIn.setAllowance(allowance);
+        System.out.println(String.format("Current Salary: %f \nAllowance: %f\n Added compensation Recorded.",loggedIn.getSalary(),loggedIn.getAllowance()));
+        this.loggedIn = null;
+    }
+
+    @Override
+    void printPayslip() {
+        if (employees.size() == 0){
+            System.out.println("There are no registered employee!");
+            return;
+        }
+
+        System.out.println("*_*_* Payslip *_*_*");
+        validateEmpID();
+
+        System.out.println(loggedIn.getFirstName());
+        System.out.println(loggedIn.getDesignation());
+        System.out.println(loggedIn.getSalary());
+
+        System.out.println("Date range(from)");
+        System.out.println("Month [mm]");
+        String monthFrom = sc.nextLine();
+        System.out.println("Day [dd]");
+        String dayFrom = sc.nextLine();
+        System.out.println("Year [yyyy]");
+        String yearFrom = sc.nextLine();
+        System.out.println("Date range(to)");
+        System.out.println("Month [mm]");
+        String monthTo = sc.nextLine();
+        System.out.println("Day [dd]");
+        String dayTo = sc.nextLine();
+        System.out.println("Year [yyyy]");
+        String yearTo = sc.nextLine();
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MM yyyy");
+        String fromDate = String.format("%s %s %s",dayFrom, monthFrom, yearFrom);
+        String toDate = String.format("%s %s %s",dayTo, monthTo, yearTo);
+
+        LocalDateTime date1 = LocalDate.parse(fromDate, dtf).atStartOfDay();
+        LocalDateTime date2 = LocalDate.parse(toDate, dtf).atStartOfDay();
+        long daysBetween = Duration.between(date1, date2).toDays();
+        System.out.println ("Days: " + daysBetween);
+    }
+
+
 }

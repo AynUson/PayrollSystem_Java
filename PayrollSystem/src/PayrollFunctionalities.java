@@ -14,7 +14,11 @@ abstract class PayrollFunctionalities {
 
     abstract void deductSalary();
 
+    abstract void addAllowance();
+
     abstract boolean validateEmpID();
+
+    abstract void printPayslip();
 
     String[] designations = {"Application Developer", "Associate Developer","Software Quality Assurance Analyst","Database Administrator","IT Director"
             ,"IT Analyst","Network Architect","IT Support Specialist","UI/UX Designer"};
@@ -31,5 +35,24 @@ abstract class PayrollFunctionalities {
 
     public HashMap getSalaryGrade() {
         return salaryGrades;
+    }
+
+    void sayThankYou(){
+        System.out.println("Exited Payroll System! Thank you! \n" +
+                "░░░░░░░░░░░░░░░░░░░░░░█████████\n" +
+                "░░███████░░░░░░░░░░███▒▒▒▒▒▒▒▒███\n" +
+                "░░█▒▒▒▒▒▒█░░░░░░░███▒▒▒▒▒▒▒▒▒▒▒▒▒███\n" +
+                "░░░█▒▒▒▒▒▒█░░░░██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n" +
+                "░░░░█▒▒▒▒▒█░░░██▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒███\n" +
+                "░░░░░█▒▒▒█░░░█▒▒▒▒▒▒████▒▒▒▒████▒▒▒▒▒▒██\n" +
+                "░░░█████████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n" +
+                "░░░█▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒██\n" +
+                "░██▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒██▒▒▒▒▒▒▒▒▒▒██▒▒▒▒██\n" +
+                "██▒▒▒███████████▒▒▒▒▒██▒▒▒▒▒▒▒▒██▒▒▒▒▒██\n" +
+                "█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒████████▒▒▒▒▒▒▒██\n" +
+                "██▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n" +
+                "░█▒▒▒███████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n" +
+                "░██▒▒▒▒▒▒▒▒▒▒████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█\n" +
+                "░░████████████░░░█████████████████\n");
     }
 }

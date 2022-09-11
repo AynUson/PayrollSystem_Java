@@ -9,10 +9,10 @@ Search Employee
 - search by lastname ✔DONE
 - search by id ✔DONE
 - Display Name✔DONE, Designation✔DONE, City Address✔DONE, Salary Grade✔DONE (search for some common salary grades in PH.)
-                       ~Show Designation Choices also
 
 Salary Deduction
-- Search for the employees id then enter amount to deduct
+- Search for the employees id then enter amount to deduct✔DONE
+- Reflect on show employees and payslip
 
 Payslip Display
 - Issue a payslip depending on the date range provided.
@@ -20,8 +20,8 @@ Payslip Display
     ot, allowances, deduction, etc. formula is up to you.
 
 Allowance
-- search for the employee's id then ask for the amount we want to add as compensation (must reflect to payslip)
-
+- search for the employee's id then ask for the amount we want to add as compensation✔DONE
+- must reflect to payslip
  */
 
 
@@ -61,14 +61,19 @@ public class Main {
             p.searchEmployee();
         if (choice == 3)
             p.deductSalary();
+        if (choice == 4)
+            p.addAllowance();
+        if (choice == 5)
+            p.printPayslip();
         if (choice == 6){
             System.out.println("_*_*_*_Payroll System_*_*_*_ | Registered Employees: "+p.numberOfEmployees+"\n----------------------------\n\t[1] Register \n\t[2] Search " +
-                    "\n\t[3] Salary Deduction  \n\t[4] \n\t[5]  \n\t[7] \n\t[8] Show Employees ");
+                    "\n\t[3] Salary Deduction  \n\t[4] Allowance \n\t[5] Payslip***  \n\t[7] Exit \n\t[8] Show Employees ");
         }
         if (choice == 8)
             p.showEmployes();
 
-        System.out.println("Proceed to Main Menu[6] / Exit[7] ");
+        if (choice != 6)
+            System.out.println("Proceed to Main Menu[6] / Exit[7] ");
 //			Asks user if user wants to continue
         System.out.println("________________________________________");
         return AskUser();
@@ -83,21 +88,6 @@ public class Main {
             System.out.println("----------------------------");
             userInput = payrollFunction(payrollSystem,userInput);
         }
-        System.out.println("Exited Payroll System! Thank you! \n" +
-                "░░░░░░░░░░░░░░░░░░░░░░█████████\n" +
-                "░░███████░░░░░░░░░░███▒▒▒▒▒▒▒▒███\n" +
-                "░░█▒▒▒▒▒▒█░░░░░░░███▒▒▒▒▒▒▒▒▒▒▒▒▒███\n" +
-                "░░░█▒▒▒▒▒▒█░░░░██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n" +
-                "░░░░█▒▒▒▒▒█░░░██▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒███\n" +
-                "░░░░░█▒▒▒█░░░█▒▒▒▒▒▒████▒▒▒▒████▒▒▒▒▒▒██\n" +
-                "░░░█████████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n" +
-                "░░░█▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒██\n" +
-                "░██▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒██▒▒▒▒▒▒▒▒▒▒██▒▒▒▒██\n" +
-                "██▒▒▒███████████▒▒▒▒▒██▒▒▒▒▒▒▒▒██▒▒▒▒▒██\n" +
-                "█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒████████▒▒▒▒▒▒▒██\n" +
-                "██▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n" +
-                "░█▒▒▒███████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n" +
-                "░██▒▒▒▒▒▒▒▒▒▒████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█\n" +
-                "░░████████████░░░█████████████████\n");
+        payrollSystem.sayThankYou();
     }
 }

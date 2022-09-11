@@ -7,6 +7,8 @@ class Employee {
     private String empID;
     private int age;
     private int salaryGrade;
+
+    private double salary;
     private String designation;
     private String cityAddress;
 
@@ -18,7 +20,7 @@ class Employee {
 
     private LocalDate empDob;
 
-    public Employee(String fname, String mname, String lname, String id,LocalDate dob, String desig, String address, int salaryGrade, int age){
+    public Employee(String fname, String mname, String lname, String id,LocalDate dob, String desig, String address, int salaryGrade, int age, double salary){
         this.firstName = fname;
         this.middleName = mname;
         this.lastName = lname;
@@ -28,7 +30,34 @@ class Employee {
         this.designation = desig;
         this.cityAddress = address;
         this.salaryGrade = salaryGrade;
+        this.salary = salary;
     }
+
+    public void setAllowance(double allowance) {
+        this.allowance = allowance;
+    }
+
+    public double getAllowance() {
+        return allowance;
+    }
+
+    public void setSalaryDeduction(double salaryDeduction) {
+        this.salaryDeduction = salaryDeduction;
+    }
+
+    public double getSalaryDeduction() {
+        return salaryDeduction;
+    }
+
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
 
     public int getSalaryGrade() {
         return salaryGrade;

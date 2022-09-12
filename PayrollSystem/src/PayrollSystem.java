@@ -1,4 +1,5 @@
 
+import java.io.FileWriter;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -7,6 +8,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Map;
+import java.time.*;
+import java.time.temporal.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
 class PayrollSystem extends PayrollFunctionalities{
     public ArrayList< Employee> employees = new ArrayList<>();
 
@@ -287,14 +292,144 @@ class PayrollSystem extends PayrollFunctionalities{
         String yearTo = sc.nextLine();
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MM yyyy");
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(dtf.format(now));
+
+
         String fromDate = String.format("%s %s %s",dayFrom, monthFrom, yearFrom);
         String toDate = String.format("%s %s %s",dayTo, monthTo, yearTo);
 
         LocalDateTime date1 = LocalDate.parse(fromDate, dtf).atStartOfDay();
         LocalDateTime date2 = LocalDate.parse(toDate, dtf).atStartOfDay();
-        long daysBetween = Duration.between(date1, date2).toDays();
-        System.out.println ("Days: " + daysBetween);
+
+        int dateValidity =  date1.compareTo(now);
+        // 0: if both dates are equal.
+//        value less than 0: if the date is before the argument date.
+//        value greater than 0: if the date is after the argument date.
+
+        if (dateValidity > 0){
+            System.out.println("Starting date can not be ahead the current date!");
+            return;
+        }
+
+        if (date1.compareTo(date2 ) > 0){
+            System.out.println("Starting date can not be ahead the ending date!");
+            return;
+        }
+        double salary = 0;
+        double totalDeduction = 0;
+        double incomeTax = this.loggedIn.getSalary() * incomeTaxTax;
+        double sss = this.loggedIn.getSalary() * sssTax;
+        double philhealth = this.loggedIn.getSalary() * philHealthTax;
+        double pagibig = this.loggedIn.getSalary() * pagIbigTax;
+        double totalCont = sss + philhealth + pagibig;
+        int workingDaysInAMonth = 20;
+        long daysBetween = calcWeekDays1(date1,date2);
+//        long daysBetween = Duration.between(date1, date2).toDays();
+
+
+        System.out.println ("Working Days: " + daysBetween);
+        System.out.print(loggedIn.getFirstName()+" | ");
+        System.out.println(loggedIn.getDesignation());
+        System.out.println("Monthly Salary"+loggedIn.getSalary());
+        System.out.println("Gross Salary: "+ (this.loggedIn.getSalary()/workingDaysInAMonth) * daysBetween);
+        System.out.println("--------------------------------------");
+        System.out.println("Allowance: "+ this.loggedIn.getAllowance());
+        salary = ((this.loggedIn.getSalary()/workingDaysInAMonth) * daysBetween) + this.loggedIn.getAllowance();
+        System.out.println("Salary Deduction: "+ this.loggedIn.getSalaryDeduction());
+        System.out.println("--------------Income Tax--------------");
+        System.out.println("Tax: "+ incomeTax);
+
+        System.out.println("--------------Contributions--------------");
+        System.out.println("SSS: "+sss);
+        System.out.println("PhilHealth: "+philhealth);
+        System.out.println("PAG-IBIG: "+ pagibig);
+        System.out.println("Total Contributions: "+ totalCont);
+        System.out.println("------------------------------------------");
+        totalDeduction = totalCont + incomeTax + this.loggedIn.getSalaryDeduction();
+        System.out.println("Total Deductions: "+ totalDeduction);
+        salary -= totalDeduction;
+        System.out.println("Net Pay after Deductions and additional compensation:");
+        System.out.println(salary);
+        String toBePrinted = String.format("Working Days: %d\nEmployee Name: %s %s %s\nDesignation: %s \nMonthly Salary: %.2f\nGross Salary: %.2f\n" +
+                        "--------------------------------------\nAllowance: %.2f\nSalary Deduction: %.2f\n--------------Income Tax--------------\nTax: %.2f\n" +
+                        "--------------Contributions--------------\nSSS: %.2f\nPhilHealth: %.2f\nPAG-IBIG: %.2f\nTotal Contributions: %.2f\n" +
+                        "------------------------------------------\nTotal Deduction: %.2f\nNet Pay after Deductions and additional compensation: %.2f",
+                daysBetween,loggedIn.getFirstName(),loggedIn.getMiddleName(),loggedIn.getLastName(),loggedIn.getDesignation(), loggedIn.getSalary(),((this.loggedIn.getSalary()/workingDaysInAMonth) * daysBetween),
+                this.loggedIn.getAllowance(),this.loggedIn.getSalaryDeduction(),incomeTax,sss,philhealth,pagibig,totalCont,totalDeduction
+                ,salary);
+        printTextFilePayslip(toBePrinted);
+        System.out.println("Text File to be printed!");
     }
 
+    public static long calcWeekDays1(final LocalDateTime start, final LocalDateTime end) {
+        final DayOfWeek startW = start.getDayOfWeek();
+        final DayOfWeek endW = end.getDayOfWeek();
+
+        final long days = ChronoUnit.DAYS.between(start, end);
+        final long daysWithoutWeekends = days - 2 * ((days + startW.getValue())/7);
+
+        //adjust for starting and ending on a Sunday:
+        return daysWithoutWeekends + (startW == DayOfWeek.SUNDAY ? 1 : 0) + (endW == DayOfWeek.SUNDAY ? 1 : 0);
+    }
+
+    void printTextFilePayslip(String toBePrinted){
+        // Assign the file content
+
+        String fileContent = "███ ███ █╬█ ██ █╬ █ ███\n" +
+                "█▄█ █▄█ █▄█ █▄ █╬ █ █▄█\n" +
+                "█╬╬ █╬█ ╬█╬ ▄█ ██ █ █╬╬\n";
+        fileContent +=toBePrinted;
+
+
+        try {
+            FileWriter myWriter = new FileWriter(String.format("Payslip%s.txt",this.loggedIn.getLastName()));
+            myWriter.write(fileContent);
+            System.out.println("File Created");
+            myWriter.close();
+        }catch (IOException e){
+            System.out.println("An error occured");
+            e.printStackTrace();
+        }
+
+
+
+
+//        FileOutputStream outputStream = null;
+//
+//        try {
+//
+//            outputStream = new FileOutputStream(String.format("Payslip%s.txt", this.loggedIn.getLastName()));
+//
+//            byte[] strToBytes = fileContent.getBytes();
+//
+//            outputStream.write(strToBytes);
+//
+//            System.out.print(
+//                    "Payslip generated.");
+//        }
+//
+//        catch (IOException e) {
+//
+//            System.out.print(e.getMessage());
+//        }
+//
+//        finally {
+//
+//            if (outputStream != null) {
+//
+//                try {
+//
+//                    outputStream.close();
+//                }
+//
+//                catch (IOException e) {
+//
+//                    System.out.print(e.getMessage());
+//                }
+//            }
+//        }
+        this.loggedIn = null;
+    }
 
 }

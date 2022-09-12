@@ -4,6 +4,15 @@ import java.util.Scanner;
 
 abstract class PayrollFunctionalities {
     int numberOfEmployees = 0;
+
+    final double sssTax = 0.0375;
+
+    final double philHealthTax = 0.015;
+
+    final double pagIbigTax = 0.0033333;
+
+    final double incomeTaxTax = 0.0499466666;
+//    ₱
     abstract String generateEmpID();
     abstract void showEmployes();
     abstract LocalDate inputDob();

@@ -15,6 +15,8 @@ Salary Deduction
 - Reflect on show employees and payslip
 
 Payslip Display
+- Check if dates are valid (dates must not be ahead on the current date, starting date must not be ahead on the ending date)✔DONE
+- Count only working days (weekdays)✔DONE
 - Issue a payslip depending on the date range provided.
 - Provide a substantial data containing common fields in a payslip like tax, night diff,
     ot, allowances, deduction, etc. formula is up to you.

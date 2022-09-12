@@ -121,8 +121,8 @@ class PayrollSystem extends PayrollFunctionalities{
 
             if (lname.equals(input) || empid.equals(input)){
                 result = String.format("\t\t**RESULT**\nID:\t\t\t\t %s \nFull name:\t\t %s %s %s \nAge:\t\t\t %s \nDesignation:\t %s " +
-                        "\nAddress:\t\t %s \nSalary Grade:\t %d- $%f \nAllowance:\t $%f ",e.getEmpID(),e.getFirstName(),e.getMiddleName(),e.getLastName(),e.getAge()
-                        ,e.getDesignation(), e.getCityAddress(),e.getSalaryGrade(), getSalaryGrade().get(e.getSalaryGrade()),e.getAllowance());
+                        "\nAddress:\t\t %s \nSalary Grade:\t %d- $%.2f \nAllowance:\t $%.2f\nSalary Deduction:\t $%.2f ",e.getEmpID(),e.getFirstName(),e.getMiddleName(),e.getLastName(),e.getAge()
+                        ,e.getDesignation(), e.getCityAddress(),e.getSalaryGrade(), getSalaryGrade().get(e.getSalaryGrade()),e.getAllowance(), e.getSalaryDeduction());
                 found = true;
                 break;
             }
@@ -291,6 +291,7 @@ class PayrollSystem extends PayrollFunctionalities{
         System.out.println("Year [yyyy]");
         String yearTo = sc.nextLine();
 
+        DateTimeFormatter dtfWords = DateTimeFormatter.ofPattern("dd MMM yyyy");
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MM yyyy");
         LocalDateTime now = LocalDateTime.now();
         System.out.println(dtf.format(now));
@@ -299,8 +300,13 @@ class PayrollSystem extends PayrollFunctionalities{
         String fromDate = String.format("%s %s %s",dayFrom, monthFrom, yearFrom);
         String toDate = String.format("%s %s %s",dayTo, monthTo, yearTo);
 
+
         LocalDateTime date1 = LocalDate.parse(fromDate, dtf).atStartOfDay();
         LocalDateTime date2 = LocalDate.parse(toDate, dtf).atStartOfDay();
+
+
+        String fromDateWords = dtfWords.format(date1);
+        String toDateWords = dtfWords.format(date2);
 
         int dateValidity =  date1.compareTo(now);
         // 0: if both dates are equal.
@@ -327,7 +333,7 @@ class PayrollSystem extends PayrollFunctionalities{
         long daysBetween = calcWeekDays1(date1,date2);
 //        long daysBetween = Duration.between(date1, date2).toDays();
 
-
+        System.out.println(String.format("Inclusive Dates: %s - %s", fromDateWords, toDateWords));
         System.out.println ("Working Days: " + daysBetween);
         System.out.print(loggedIn.getFirstName()+" | ");
         System.out.println(loggedIn.getDesignation());
@@ -351,10 +357,10 @@ class PayrollSystem extends PayrollFunctionalities{
         salary -= totalDeduction;
         System.out.println("Net Pay after Deductions and additional compensation:");
         System.out.println(salary);
-        String toBePrinted = String.format("Working Days: %d\nEmployee Name: %s %s %s\nDesignation: %s \nMonthly Salary: %.2f\nGross Salary: %.2f\n" +
+        String toBePrinted = String.format("Inclusive Dates: %s - %s\nWorking Days: %d\nEmployee Name: %s %s %s\nDesignation: %s \nMonthly Salary: %.2f\nGross Salary: %.2f\n" +
                         "--------------------------------------\nAllowance: %.2f\nSalary Deduction: %.2f\n--------------Income Tax--------------\nTax: %.2f\n" +
                         "--------------Contributions--------------\nSSS: %.2f\nPhilHealth: %.2f\nPAG-IBIG: %.2f\nTotal Contributions: %.2f\n" +
-                        "------------------------------------------\nTotal Deduction: %.2f\nNet Pay after Deductions and additional compensation: %.2f",
+                        "------------------------------------------\nTotal Deduction: %.2f\nNet Pay after Deductions and additional compensation: %.2f", fromDateWords, toDateWords,
                 daysBetween,loggedIn.getFirstName(),loggedIn.getMiddleName(),loggedIn.getLastName(),loggedIn.getDesignation(), loggedIn.getSalary(),((this.loggedIn.getSalary()/workingDaysInAMonth) * daysBetween),
                 this.loggedIn.getAllowance(),this.loggedIn.getSalaryDeduction(),incomeTax,sss,philhealth,pagibig,totalCont,totalDeduction
                 ,salary);

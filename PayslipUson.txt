@@ -1,13 +1,14 @@
 ███ ███ █╬█ ██ █╬ █ ███
 █▄█ █▄█ █▄█ █▄ █╬ █ █▄█
 █╬╬ █╬█ ╬█╬ ▄█ ██ █ █╬╬
+Inclusive Dates: 22 Aug 2022 - 31 Aug 2022
 Working Days: 7
 Employee Name: Ayn Viloria Uson
 Designation: Application Developer 
 Monthly Salary: 30000.00
 Gross Salary: 10500.00
 --------------------------------------
-Allowance: 200.00
+Allowance: 1500.00
 Salary Deduction: 1000.00
 --------------Income Tax--------------
 Tax: 1498.40
@@ -18,4 +19,4 @@ PAG-IBIG: 100.00
 Total Contributions: 1675.00
 ------------------------------------------
 Total Deduction: 4173.40
-Net Pay after Deductions and additional compensation: 6526.60
+Net Pay after Deductions and additional compensation: 7826.60

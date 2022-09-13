@@ -69,7 +69,7 @@ public class Main {
             p.printPayslip();
         if (choice == 6){
             System.out.println("_*_*_*_Payroll System_*_*_*_ | Registered Employees: "+p.numberOfEmployees+"\n----------------------------\n\t[1] Register \n\t[2] Search " +
-                    "\n\t[3] Salary Deduction  \n\t[4] Allowance \n\t[5] Payslip***  \n\t[7] Exit \n\t[8] Show Employees ");
+                    "\n\t[3] Salary Deduction  \n\t[4] Allowance \n\t[5] Payslip \n\t[7] Exit \n\t[8] Show Employees ");
         }
         if (choice == 8)
             p.showEmployes();

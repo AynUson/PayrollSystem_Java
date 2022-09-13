@@ -121,7 +121,7 @@ class PayrollSystem extends PayrollFunctionalities{
 
             if (lname.equals(input) || empid.equals(input)){
                 result = String.format("\t\t**RESULT**\nID:\t\t\t\t %s \nFull name:\t\t %s %s %s \nAge:\t\t\t %s \nDesignation:\t %s " +
-                        "\nAddress:\t\t %s \nSalary Grade:\t %d- $%.2f \nAllowance:\t $%.2f\nSalary Deduction:\t $%.2f ",e.getEmpID(),e.getFirstName(),e.getMiddleName(),e.getLastName(),e.getAge()
+                        "\nAddress:\t\t %s \nSalary Grade:\t %d- $%.2f \nAllowance:\t\t $%.2f\nSalary Deduction: $%.2f ",e.getEmpID(),e.getFirstName(),e.getMiddleName(),e.getLastName(),e.getAge()
                         ,e.getDesignation(), e.getCityAddress(),e.getSalaryGrade(), getSalaryGrade().get(e.getSalaryGrade()),e.getAllowance(), e.getSalaryDeduction());
                 found = true;
                 break;
@@ -250,7 +250,7 @@ class PayrollSystem extends PayrollFunctionalities{
         System.out.println("*_*_* Allowance *_*_*");
         validateEmpID();
 
-        System.out.println(loggedIn.getFirstName());
+        System.out.println(String.format("%s %s %s",loggedIn.getFirstName(), loggedIn.getMiddleName(), loggedIn.getLastName()));
         System.out.println(loggedIn.getDesignation());
         System.out.println(loggedIn.getSalary());
 
@@ -397,44 +397,6 @@ class PayrollSystem extends PayrollFunctionalities{
             System.out.println("An error occured");
             e.printStackTrace();
         }
-
-
-
-
-//        FileOutputStream outputStream = null;
-//
-//        try {
-//
-//            outputStream = new FileOutputStream(String.format("Payslip%s.txt", this.loggedIn.getLastName()));
-//
-//            byte[] strToBytes = fileContent.getBytes();
-//
-//            outputStream.write(strToBytes);
-//
-//            System.out.print(
-//                    "Payslip generated.");
-//        }
-//
-//        catch (IOException e) {
-//
-//            System.out.print(e.getMessage());
-//        }
-//
-//        finally {
-//
-//            if (outputStream != null) {
-//
-//                try {
-//
-//                    outputStream.close();
-//                }
-//
-//                catch (IOException e) {
-//
-//                    System.out.print(e.getMessage());
-//                }
-//            }
-//        }
         this.loggedIn = null;
     }
 

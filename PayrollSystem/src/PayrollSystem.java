@@ -18,6 +18,19 @@ class PayrollSystem extends PayrollFunctionalities{
 
     Scanner sc = new Scanner(System.in);
 
+    double validateDouble(){
+        double d;
+        while (true) {
+//            System.out.println("Type a double-type number:");
+            try {
+                d = Double.parseDouble(sc.nextLine());
+                return d;
+            } catch (NumberFormatException ignore) {
+                System.out.println("Invalid input. Enter valid number!");
+            }
+        }
+    }
+
     //  Payroll Functionalities Class
     @Override
     void registerEmployee(){
@@ -43,13 +56,23 @@ class PayrollSystem extends PayrollFunctionalities{
         System.out.println("Enter Address:");
         String address = sc.nextLine();
 
-        System.out.println("Salary: ");
+        System.out.println("Monthly Salary: ");
 
-        double salary = sc.nextDouble();
+        double salary = validateDouble();
 //
+//        while (true) {
+//            System.out.println("Type a double-type number:");
+//            try {
+//                salary = Double.parseDouble(sc.nextLine());
+//                break; // will only get to here if input was a double
+//            } catch (NumberFormatException ignore) {
+//                System.out.println("Invalid input. Enter your salary!!");
+//            }
+//        }
+
+
         double minimumSalary = 0;
         int grade = 0;
-        sc.nextLine();
         for (Map.Entry me : salaryGrades.entrySet()) {
             double val = (double) me.getValue();
             int g = (int) me.getKey();
@@ -150,17 +173,28 @@ class PayrollSystem extends PayrollFunctionalities{
             return String.format("emp%d",numberOfEmployees);
     }
 
+    String validateDate(String msg){
+        String date;
+        while (true) {
+            System.out.println(msg);
+            try {
+                date = Integer.toString(Integer.parseInt(sc.nextLine()));
+                if (date.length() == 1)
+                    date = "0"+date;
+                return date;
+            } catch (NumberFormatException ignore) {
+                System.out.println("Invalid input. Follow the instruction. example January = [01]!");
+            }
+        }
+    }
     @Override
     LocalDate inputDob() {
         Scanner scanner = new Scanner(System.in);
 
 //reads the date of birth from the user
-        System.out.println("Enter birth month [MM]: ");
-        String month = scanner.nextLine();
-        System.out.println("Enter birth day [DD]: ");
-        String day = scanner.nextLine();
-        System.out.println("Enter birth year [YYYY]: ");
-        String year = scanner.nextLine();
+        String month = validateDate("Enter birth month [MM]: ");
+        String day = validateDate("Enter birth day [DD]:  ");
+        String year =validateDate("Enter birth year [YYYY]: ");
 //the parse() method obtains an instance of LocalDate from a text string such as 1992-08-11
         LocalDate dob = LocalDate.parse(String.format("%s-%s-%s",year,month,day));
         return dob;
@@ -225,15 +259,15 @@ class PayrollSystem extends PayrollFunctionalities{
         }
 
         System.out.println("*_*_* Salary Deduction *_*_*");
-        validateEmpID();
+        if (!validateEmpID())
+            return;
 
         System.out.println(loggedIn.getFirstName());
         System.out.println(loggedIn.getDesignation());
         System.out.println(loggedIn.getSalary());
 
         System.out.println("Enter amount to deduct: ");
-        double deduction = sc.nextDouble();
-        sc.nextLine();
+        double deduction = validateDouble();
         loggedIn.setSalaryDeduction(deduction);
         System.out.println(String.format("Current Salary: %f \nSalary Deduction: %f\n Salary Deduction Recorded.",loggedIn.getSalary(),loggedIn.getSalaryDeduction()));
         this.loggedIn = null;
@@ -248,15 +282,15 @@ class PayrollSystem extends PayrollFunctionalities{
         }
 
         System.out.println("*_*_* Allowance *_*_*");
-        validateEmpID();
+        if (!validateEmpID())
+            return;
 
         System.out.println(String.format("%s %s %s",loggedIn.getFirstName(), loggedIn.getMiddleName(), loggedIn.getLastName()));
         System.out.println(loggedIn.getDesignation());
         System.out.println(loggedIn.getSalary());
 
         System.out.println("Enter amount to add as compensation: ");
-        double allowance = sc.nextDouble();
-        sc.nextLine();
+        double allowance = validateDouble();
         loggedIn.setAllowance(allowance);
         System.out.println(String.format("Current Salary: %f \nAllowance: %f\n Added compensation Recorded.",loggedIn.getSalary(),loggedIn.getAllowance()));
         this.loggedIn = null;
@@ -277,19 +311,14 @@ class PayrollSystem extends PayrollFunctionalities{
         System.out.println(loggedIn.getSalary());
 
         System.out.println("Date range(from)");
-        System.out.println("Month [mm]");
-        String monthFrom = sc.nextLine();
-        System.out.println("Day [dd]");
-        String dayFrom = sc.nextLine();
-        System.out.println("Year [yyyy]");
-        String yearFrom = sc.nextLine();
+        String monthFrom = validateDate("Month [mm]");
+        String dayFrom = validateDate("Day [dd]");
+        String yearFrom = validateDate("Year [yyyy]");
+
         System.out.println("Date range(to)");
-        System.out.println("Month [mm]");
-        String monthTo = sc.nextLine();
-        System.out.println("Day [dd]");
-        String dayTo = sc.nextLine();
-        System.out.println("Year [yyyy]");
-        String yearTo = sc.nextLine();
+        String monthTo =validateDate("Month [mm]");
+        String dayTo = validateDate("Day [dd]");
+        String yearTo = validateDate("Year [yyyy]");
 
         DateTimeFormatter dtfWords = DateTimeFormatter.ofPattern("dd MMM yyyy");
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MM yyyy");
@@ -344,19 +373,18 @@ class PayrollSystem extends PayrollFunctionalities{
         salary = ((this.loggedIn.getSalary()/workingDaysInAMonth) * daysBetween) + this.loggedIn.getAllowance();
         System.out.println("Salary Deduction: "+ this.loggedIn.getSalaryDeduction());
         System.out.println("--------------Income Tax--------------");
-        System.out.println("Tax: "+ incomeTax);
+        System.out.println(String.format("Tax: %.2f", incomeTax));
 
         System.out.println("--------------Contributions--------------");
-        System.out.println("SSS: "+sss);
-        System.out.println("PhilHealth: "+philhealth);
-        System.out.println("PAG-IBIG: "+ pagibig);
-        System.out.println("Total Contributions: "+ totalCont);
+        System.out.println(String.format("SSS: %.2f",sss));
+        System.out.println(String.format("PhilHealth: %.2f",philhealth));
+        System.out.println(String.format("PAG-IBIG: %.2f", pagibig));
+        System.out.println(String.format("Total Contributions: %.2f", totalCont));
         System.out.println("------------------------------------------");
         totalDeduction = totalCont + incomeTax + this.loggedIn.getSalaryDeduction();
-        System.out.println("Total Deductions: "+ totalDeduction);
+        System.out.println(String.format("Total Deductions: %.2f", totalDeduction));
         salary -= totalDeduction;
-        System.out.println("Net Pay after Deductions and additional compensation:");
-        System.out.println(salary);
+        System.out.println(String.format("Net Pay after Deductions and additional compensation: %.2f",salary));
         String toBePrinted = String.format("Inclusive Dates: %s - %s\nWorking Days: %d\nEmployee Name: %s %s %s\nDesignation: %s \nMonthly Salary: %.2f\nGross Salary: %.2f\n" +
                         "--------------------------------------\nAllowance: %.2f\nSalary Deduction: %.2f\n--------------Income Tax--------------\nTax: %.2f\n" +
                         "--------------Contributions--------------\nSSS: %.2f\nPhilHealth: %.2f\nPAG-IBIG: %.2f\nTotal Contributions: %.2f\n" +

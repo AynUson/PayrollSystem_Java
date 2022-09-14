@@ -50,7 +50,7 @@ public class Main {
         if (numeric && singleChar && validNumber){
             return userInput;
         }else {
-            System.out.println("Invalid input. Ending Transaction.");
+            System.out.println("Invalid input. Please follow instructions.");
             return 0;
         }
     }

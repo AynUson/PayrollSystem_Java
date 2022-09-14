@@ -1,22 +1,22 @@
 ███ ███ █╬█ ██ █╬ █ ███
 █▄█ █▄█ █▄█ █▄ █╬ █ █▄█
 █╬╬ █╬█ ╬█╬ ▄█ ██ █ █╬╬
-Inclusive Dates: 22 Aug 2022 - 31 Aug 2022
+Inclusive Dates: 22 Aug 2000 - 31 Aug 2000
 Working Days: 7
-Employee Name: Ayn Viloria Uson
-Designation: Aoplication Developer 
-Monthly Salary: 30000.00
-Gross Salary: 10500.00
+Employee Name: Clarisse Egot Dungog
+Designation: UI/UX Designer 
+Monthly Salary: 25000.00
+Gross Salary: 8750.00
 --------------------------------------
 Allowance: 0.00
 Salary Deduction: 0.00
 --------------Income Tax--------------
-Tax: 1498.40
+Tax: 1248.67
 --------------Contributions--------------
-SSS: 1125.00
-PhilHealth: 450.00
-PAG-IBIG: 100.00
-Total Contributions: 1675.00
+SSS: 937.50
+PhilHealth: 375.00
+PAG-IBIG: 83.33
+Total Contributions: 1395.83
 ------------------------------------------
-Total Deduction: 3173.40
-Net Pay after Deductions and additional compensation: 7326.60
+Total Deduction: 2644.50
+Net Pay after Deductions and additional compensation: 6105.50

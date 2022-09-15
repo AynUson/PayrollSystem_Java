@@ -14,10 +14,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 class PayrollSystem extends PayrollFunctionalities{
     public ArrayList< Employee> employees = new ArrayList<>();
+//    ArrayList that will store employee object
 
 
     Scanner sc = new Scanner(System.in);
 
+//    Method that validates if the input is numeric
+//    Used on setting salary, allowance, deductions
     double validateDouble(){
         double d;
         while (true) {
@@ -32,8 +35,11 @@ class PayrollSystem extends PayrollFunctionalities{
     }
 
     //  Payroll Functionalities Class
+
+//   method for registering employee
     @Override
     void registerEmployee(){
+//        booleans for validations
         boolean duplicate = false;
         boolean isLegalAge = true;
         int counter = 1;
@@ -149,9 +155,6 @@ class PayrollSystem extends PayrollFunctionalities{
                 found = true;
                 break;
             }
-
-
-
         }
         if (!found)
             result = "No Matches!";
@@ -215,6 +218,7 @@ class PayrollSystem extends PayrollFunctionalities{
 
     @Override
     void showEmployes() {
+//        Extra method to show the registered employees
         if (employees.size() == 0){
             System.out.println("There are no registered employee!");
             return;
@@ -325,7 +329,6 @@ class PayrollSystem extends PayrollFunctionalities{
         LocalDateTime now = LocalDateTime.now();
         System.out.println(dtf.format(now));
 
-
         String fromDate = String.format("%s %s %s",dayFrom, monthFrom, yearFrom);
         String toDate = String.format("%s %s %s",dayTo, monthTo, yearTo);
 
@@ -395,6 +398,7 @@ class PayrollSystem extends PayrollFunctionalities{
         printTextFilePayslip(toBePrinted);
         System.out.println("Text File to be printed!");
     }
+
 
     public static long calcWeekDays1(final LocalDateTime start, final LocalDateTime end) {
         final DayOfWeek startW = start.getDayOfWeek();

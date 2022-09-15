@@ -17,9 +17,9 @@ Salary Deduction
 Payslip Display
 - Check if dates are valid (dates must not be ahead on the current date, starting date must not be ahead on the ending date)✔DONE
 - Count only working days (weekdays)✔DONE
-- Issue a payslip depending on the date range provided.
+- Issue a payslip depending on the date range provided.✔DONE
 - Provide a substantial data containing common fields in a payslip like tax, night diff,
-    ot, allowances, deduction, etc. formula is up to you.
+    ot, allowances, deduction, etc. formula is up to you.✔DONE
 
 Allowance
 - search for the employee's id then ask for the amount we want to add as compensation✔DONE
@@ -29,6 +29,7 @@ Allowance
 
 
 public class Main {
+//    Method for asking user inputs on main menu
     static int AskUser(){
         Scanner sc = new Scanner(System.in);
         String userChoiceString = sc.nextLine();
@@ -57,22 +58,46 @@ public class Main {
 
     static int payrollFunction(PayrollSystem p, int choice){
 //        Convert this to Switch
-        if (choice == 1)
-            p.registerEmployee();
-        if (choice == 2)
-            p.searchEmployee();
-        if (choice == 3)
-            p.deductSalary();
-        if (choice == 4)
-            p.addAllowance();
-        if (choice == 5)
-            p.printPayslip();
-        if (choice == 6){
-            System.out.println("_*_*_*_Payroll System_*_*_*_ | Registered Employees: "+p.numberOfEmployees+"\n----------------------------\n\t[1] Register \n\t[2] Search " +
-                    "\n\t[3] Salary Deduction  \n\t[4] Allowance \n\t[5] Payslip \n\t[7] Exit \n\t[8] Show Employees ");
+        switch (choice){
+            case 1:
+                p.registerEmployee();
+                break;
+            case 2:
+                p.searchEmployee();
+                break;
+            case 3:
+                p.deductSalary();
+                break;
+            case 4:
+                p.addAllowance();
+                break;
+            case 5:
+                p.printPayslip();
+                break;
+            case 6:
+                System.out.println("_*_*_*_Payroll System_*_*_*_ | Registered Employees: "+p.numberOfEmployees+"\n----------------------------\n\t[1] Register \n\t[2] Search " +
+                        "\n\t[3] Salary Deduction  \n\t[4] Allowance \n\t[5] Payslip \n\t[7] Exit \n\t[8] Show Employees ");
+                break;
+            case 8:
+                p.showEmployes();
+                break;
         }
-        if (choice == 8)
-            p.showEmployes();
+//        if (choice == 1)
+//            p.registerEmployee();
+//        if (choice == 2)
+//            p.searchEmployee();
+//        if (choice == 3)
+//            p.deductSalary();
+//        if (choice == 4)
+//            p.addAllowance();
+//        if (choice == 5)
+//            p.printPayslip();
+//        if (choice == 6){
+//            System.out.println("_*_*_*_Payroll System_*_*_*_ | Registered Employees: "+p.numberOfEmployees+"\n----------------------------\n\t[1] Register \n\t[2] Search " +
+//                    "\n\t[3] Salary Deduction  \n\t[4] Allowance \n\t[5] Payslip \n\t[7] Exit \n\t[8] Show Employees ");
+//        }
+//        if (choice == 8)
+//            p.showEmployes();
 
         if (choice != 6)
             System.out.println("Proceed to Main Menu[6] / Exit[7] ");

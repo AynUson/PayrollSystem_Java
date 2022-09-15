@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.util.Scanner;
 class Employee {
+//    employees attributes and methods, declared and definer here
     private String firstName;
     private String middleName;
     private String lastName;

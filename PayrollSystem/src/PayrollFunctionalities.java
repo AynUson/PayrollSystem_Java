@@ -2,6 +2,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Scanner;
 
+// Declared the functions/methods that the payroll system will be using
 abstract class PayrollFunctionalities {
     int numberOfEmployees = 0;
 
@@ -13,6 +14,8 @@ abstract class PayrollFunctionalities {
 
     final double incomeTaxTax = 0.0499466666;
 //    ₱
+
+//    this methods will be defined on PayrollSystem Class
     abstract String generateEmpID();
     abstract void showEmployes();
     abstract LocalDate inputDob();
